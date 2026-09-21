@@ -72,12 +72,12 @@ body {
 }
 
 .gallery {
-  max-width: 1240px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 56px 24px 96px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 .status {
@@ -108,50 +108,24 @@ body {
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
+  border-radius: 14px;
   text-decoration: none;
   color: inherit;
-  display: block;
-  transition: transform 0.18s ease, border-color 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .card:hover {
-  transform: translateY(-4px);
   border-color: var(--accent);
-}
-
-.card-image-wrap {
-  aspect-ratio: 9 / 16;
   background: var(--surface-elevated);
-  overflow: hidden;
-}
-
-.card-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-}
-
-.card-fallback {
-  aspect-ratio: 9 / 16;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--fallback-a, #1d2b64), var(--fallback-b, #0a0e23));
-}
-
-.card-fallback .glyph {
-  font-size: 44px;
-  font-weight: 800;
-  color: rgba(245, 245, 247, 0.7);
-  letter-spacing: -1px;
 }
 
 .card-body {
-  padding: 16px 18px 20px;
+  padding: 18px 20px;
+  min-width: 0;
 }
 
 .card-tag {
@@ -178,6 +152,22 @@ body {
   background: rgba(255, 255, 255, 0.06);
   padding: 3px 10px;
   border-radius: 10px;
+}
+
+.card-link {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 20px 20px 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.card:hover .card-link {
+  color: var(--accent);
 }
 
 .site-footer {
