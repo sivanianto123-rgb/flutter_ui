@@ -1,0 +1,51 @@
+# 1. Query to get a list of all activities, accessible to public.
+query GetActivities @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public as it retrieves general activity information.") {
+  activities {
+    id
+    name
+    activityType
+    ageRange
+    description
+    imageUrl
+    contentUrl
+    createdAt
+  }
+}
+
+# 2. Query to get all children associated with the current logged-in parent.
+query GetMyChildren @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users as it retrieves only their associated children.") {
+  children(where: { parent: { id_expr: "auth.uid" } }) {
+    id
+    name
+    age
+    avatarUrl
+    createdAt
+  }
+}
+
+# 3. Mutation to create a new reading session for a specific child and book.
+mutation CreateReadingSession($childId: UUID!, $bookId: UUID!, $startTime: Timestamp!, $endTime: Timestamp!, $type: String!, $progress: String) @auth(level: USER) {
+  readingSession_insert(data: {
+    childId: $childId,
+    bookId: $bookId,
+    startTime: $startTime,
+    endTime: $endTime,
+    type: $type,
+    progress: $progress,
+    createdAt_expr: "request.time"
+  })
+}
+
+# 4. Query to retrieve books within a specific age range, accessible to public.
+query GetBooksByAgeRange($ageRange: String!) @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public as it retrieves general book information filtered by age.") {
+  books(where: { ageRange: { eq: $ageRange } }) {
+    id
+    title
+    author
+    ageRange
+    description
+    coverImageUrl
+    contentUrl
+    createdAt
+  }
+}

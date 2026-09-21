@@ -1,0 +1,37 @@
+{
+  "name": "pulseping",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "check:cron": "curl -s -H \"Authorization: Bearer ${CRON_SECRET:-dev-cron-secret-change-me}\" http://localhost:3000/api/cron/check | python3 -m json.tool",
+    "monitor": "python3 worker/monitor.py",
+    "monitor:install": "python3 -m venv .venv && .venv/bin/pip install -r worker/requirements.txt",
+    "monitor:run": ".venv/bin/python worker/monitor.py"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.4",
+    "drizzle-orm": "^0.45.2",
+    "nanoid": "^5.1.16",
+    "next": "16.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "resend": "^6.18.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

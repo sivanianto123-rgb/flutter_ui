@@ -1,0 +1,47 @@
+name: mave_1
+description: Mave - A toddler reading app powered by Gemini.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  flutter_riverpod: ^2.5.1
+
+  # Gemini / networking
+  web_socket_channel: ^3.0.1
+
+  # Audio recording & playback
+  record: ^6.0.0
+  audioplayers: ^6.1.0
+
+  # Persistence
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.0
+
+  # UI helpers
+  confetti: ^0.7.0
+  flutter_screenutil: ^5.9.3
+
+  # Sensors (parallax on mobile)
+  sensors_plus: ^6.1.1
+
+  # Permissions
+  permission_handler: ^11.3.1
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sounds/

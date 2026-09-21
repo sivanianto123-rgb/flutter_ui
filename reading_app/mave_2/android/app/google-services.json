@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497558927491",
+    "project_id": "mave-app-7787e",
+    "storage_bucket": "mave-app-7787e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497558927491:android:072d9987a40b1ea8ce43b6",
+        "android_client_info": {
+          "package_name": "com.mave.mave_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvk7MicJUBGPkf3i-yBQzZmeWzWrvSx5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,71 @@
+mutation CreateDemoData @transaction @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users.") {
+  parent1: parent_insert(data: {
+    email: "parent1@example.com",
+    displayName: "Parent One",
+    createdAt: "2024-01-01T00:00:00Z"
+  })
+  parent2: parent_insert(data: {
+    email: "parent2@example.com",
+    displayName: "Parent Two",
+    createdAt: "2024-01-01T00:00:00Z"
+  })
+  child1: child_insert(data: {
+    name: "Child One",
+    age: 5,
+    avatarUrl: "https://example.com/child1.png",
+    createdAt: "2024-01-01T00:00:00Z",
+    parentId_expr: "mutation.parent1.id"
+  })
+  child2: child_insert(data: {
+    name: "Child Two",
+    age: 7,
+    avatarUrl: "https://example.com/child2.png",
+    createdAt: "2024-01-01T00:00:00Z",
+    parentId_expr: "mutation.parent2.id"
+  })
+  book1: book_insert(data: {
+    title: "The Adventures of Timmy",
+    author: "Author A",
+    ageRange: "5-7",
+    description: "A fun adventure story for young readers.",
+    coverImageUrl: "https://example.com/book1.png",
+    contentUrl: "https://example.com/book1.pdf",
+    createdAt: "2024-01-01T00:00:00Z"
+  })
+  book2: book_insert(data: {
+    title: "Learning with Colors",
+    author: "Author B",
+    ageRange: "3-5",
+    description: "An educational book about colors.",
+    coverImageUrl: "https://example.com/book2.png",
+    contentUrl: "https://example.com/book2.pdf",
+    createdAt: "2024-01-01T00:00:00Z"
+  })
+  activity1: activity_insert(data: {
+    name: "Story Time",
+    activityType: "Reading",
+    ageRange: "5-7",
+    description: "Join us for an exciting story time!",
+    imageUrl: "https://example.com/activity1.png",
+    contentUrl: "https://example.com/activity1.mp4",
+    createdAt: "2024-01-01T00:00:00Z"
+  })
+  readingSession1: readingSession_insert(data: {
+    startTime: "2024-01-02T10:00:00Z",
+    endTime: "2024-01-02T10:30:00Z",
+    type: "Book Reading",
+    progress: "Chapter 3",
+    createdAt: "2024-01-02T09:55:00Z",
+    childId_expr: "mutation.child1.id",
+    bookId_expr: "mutation.book1.id"
+  })
+  readingSession2: readingSession_insert(data: {
+    startTime: "2024-01-03T14:00:00Z",
+    endTime: "2024-01-03T14:45:00Z",
+    type: "Activity Session",
+    progress: "Completed",
+    createdAt: "2024-01-03T13:50:00Z",
+    childId_expr: "mutation.child2.id",
+    activityId_expr: "mutation.activity1.id"
+  })
+}
