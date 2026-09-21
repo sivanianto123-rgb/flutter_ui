@@ -1,0 +1,30 @@
+name: mave_4
+description: "Enchanted Forest Playground — Flame game demo."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  # ── Flame game engine ─────────────────────────────────────────────────────
+  flame: ^1.18.0
+  flame_audio: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    # Background scene
+    - assets/images/
+    # Placeholder audio folder (add .mp3/.ogg files here for flame_audio)
+    - assets/audio/

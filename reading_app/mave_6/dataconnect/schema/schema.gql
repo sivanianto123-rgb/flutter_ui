@@ -1,0 +1,44 @@
+type Parent @table {
+  email: String!
+  createdAt: Timestamp!
+  displayName: String
+}
+
+type Child @table {
+  name: String!
+  age: Int!
+  createdAt: Timestamp!
+  avatarUrl: String
+  parent: Parent
+}
+
+type Book @table {
+  title: String!
+  author: String!
+  ageRange: String!
+  createdAt: Timestamp!
+  description: String
+  coverImageUrl: String
+  contentUrl: String
+}
+
+type Activity @table {
+  name: String!
+  activityType: String!
+  ageRange: String!
+  createdAt: Timestamp!
+  description: String
+  imageUrl: String
+  contentUrl: String
+}
+
+type ReadingSession @table {
+  startTime: Timestamp!
+  endTime: Timestamp!
+  type: String!
+  createdAt: Timestamp!
+  progress: String
+  child: Child
+  book: Book
+  activity: Activity
+}

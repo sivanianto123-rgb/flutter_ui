@@ -1,0 +1,41 @@
+name: mave_6
+description: "Mave - A reading app for toddlers"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  flutter_riverpod: ^2.5.1
+
+  # Animations
+  flutter_animate: ^4.5.0
+
+  # 2D game engine
+  flame: ^1.35.1
+
+  # Persistence
+  shared_preferences: ^2.3.3
+
+  cupertino_icons: ^1.0.8
+  audioplayers: ^6.6.0
+  path_provider: ^2.1.5
+  http: ^1.2.2
+  crypto: ^3.0.3
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.1
+  app_links: ^6.3.2
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
