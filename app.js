@@ -2,9 +2,17 @@
   const OWNER = "sivanianto123-rgb";
   const REPO = "flutter_ui";
   const BRANCH = "main";
+  const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".webp", ".gif"];
   const EXCLUDED_ROOTS = ["reading_app"]; // company project, shown separately
 
   const galleryEl = document.getElementById("gallery");
+
+  const GRADIENTS = [
+    ["#1d2b64", "#0a0e23"],
+    ["#360033", "#0b0014"],
+    ["#0f2027", "#06090a"],
+    ["#283048", "#0b0f1a"],
+  ];
 
   function setStatus(message, isError = false) {
     galleryEl.innerHTML = `<p class="status${isError ? " error" : ""}">${escapeHtml(message)}</p>`;
@@ -33,6 +41,14 @@
     return EXCLUDED_ROOTS.some(
       (root) => path === root || path.startsWith(`${root}/`)
     );
+  }
+
+  function hashString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
+    }
+    return hash;
   }
 
   async function fetchJson(url) {
@@ -70,18 +86,49 @@
       const lastSegment = segments[segments.length - 1];
       const parentSegment = segments.length > 1 ? segments[segments.length - 2] : null;
 
+      const screenshotPath = [...blobPaths].find(
+        (path) =>
+          path.startsWith(`${root}/`) &&
+          !path.slice(root.length + 1).includes("/") &&
+          IMAGE_EXTENSIONS.some((ext) => path.toLowerCase().endsWith(ext))
+      );
+
       const isReact = root === "to_do_list";
+      const gradient = GRADIENTS[hashString(root) % GRADIENTS.length];
 
       entries.push({
         title: titleCase(lastSegment),
         tag: parentSegment ? titleCase(parentSegment) : null,
         tech: isReact ? "React" : "Flutter",
         htmlUrl: `https://github.com/${OWNER}/${REPO}/tree/${BRANCH}/${encodeGithubPath(root)}`,
+        imageUrl: screenshotPath
+          ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${encodeGithubPath(screenshotPath)}`
+          : null,
+        gradientA: gradient[0],
+        gradientB: gradient[1],
       });
     }
 
     entries.sort((a, b) => a.title.localeCompare(b.title));
     return entries;
+  }
+
+  // A little wireframe "app screen" silhouette — status bar, hero block,
+  // text lines, a button — so entries without a real screenshot yet still
+  // read as a UI preview instead of a blank color tile.
+  function wireframeSvg() {
+    return `
+      <svg class="wireframe" viewBox="0 0 160 280" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <rect x="10" y="10" width="140" height="260" rx="18" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="2" />
+        <rect x="26" y="28" width="30" height="6" rx="3" fill="currentColor" fill-opacity="0.35" />
+        <circle cx="122" cy="31" r="4" fill="currentColor" fill-opacity="0.35" />
+        <rect x="26" y="50" width="108" height="70" rx="10" fill="currentColor" fill-opacity="0.16" />
+        <rect x="26" y="134" width="90" height="8" rx="4" fill="currentColor" fill-opacity="0.3" />
+        <rect x="26" y="150" width="70" height="8" rx="4" fill="currentColor" fill-opacity="0.2" />
+        <rect x="26" y="176" width="108" height="30" rx="15" fill="currentColor" fill-opacity="0.28" />
+        <rect x="26" y="222" width="50" height="7" rx="3.5" fill="currentColor" fill-opacity="0.18" />
+        <rect x="26" y="238" width="80" height="7" rx="3.5" fill="currentColor" fill-opacity="0.18" />
+      </svg>`;
   }
 
   function renderCards(entries) {
@@ -97,22 +144,25 @@
     }
 
     galleryEl.innerHTML = entries
-      .map(
-        (entry) => `
+      .map((entry) => {
+        const media = entry.imageUrl
+          ? `<div class="card-image-wrap">
+               <img src="${entry.imageUrl}" alt="${escapeHtml(entry.title)}" loading="lazy" />
+             </div>`
+          : `<div class="card-fallback" style="--fallback-a:${entry.gradientA}; --fallback-b:${entry.gradientB}">
+               ${wireframeSvg()}
+             </div>`;
+
+        return `
       <a class="card" href="${entry.htmlUrl}" target="_blank" rel="noopener">
+        ${media}
         <div class="card-body">
           ${entry.tag ? `<p class="card-tag">${escapeHtml(entry.tag)}</p>` : ""}
           <p class="card-title">${escapeHtml(entry.title)}</p>
           <span class="card-tech">${escapeHtml(entry.tech)}</span>
         </div>
-        <div class="card-link">
-          View on GitHub
-          <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
-            <path fill="currentColor" d="M6 3a.75.75 0 0 1 .75-.75h5.5A.75.75 0 0 1 13 3v5.5a.75.75 0 0 1-1.5 0V4.81L4.03 12.28a.75.75 0 0 1-1.06-1.06L10.44 3.5H6.75A.75.75 0 0 1 6 3Z" />
-          </svg>
-        </div>
-      </a>`
-      )
+      </a>`;
+      })
       .join("");
   }
 

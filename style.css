@@ -72,12 +72,12 @@ body {
 }
 
 .gallery {
-  max-width: 1000px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 56px 24px 96px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
 }
 
 .status {
@@ -108,24 +108,50 @@ body {
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 20px;
+  overflow: hidden;
   text-decoration: none;
   color: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  display: block;
+  transition: transform 0.18s ease, border-color 0.18s ease;
 }
 
 .card:hover {
+  transform: translateY(-4px);
   border-color: var(--accent);
+}
+
+.card-image-wrap {
+  aspect-ratio: 4 / 3;
   background: var(--surface-elevated);
+  overflow: hidden;
+}
+
+.card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.card-fallback {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--fallback-a, #1d2b64), var(--fallback-b, #0a0e23));
+}
+
+.card-fallback .wireframe {
+  height: 100%;
+  width: auto;
 }
 
 .card-body {
-  padding: 18px 20px;
-  min-width: 0;
+  padding: 18px 20px 22px;
 }
 
 .card-tag {
@@ -134,40 +160,24 @@ body {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
 }
 
 .card-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
-  margin: 0 0 6px;
+  margin: 0 0 10px;
   letter-spacing: -0.2px;
 }
 
 .card-tech {
   display: inline-block;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-secondary);
   background: rgba(255, 255, 255, 0.06);
-  padding: 3px 10px;
+  padding: 4px 11px;
   border-radius: 10px;
-}
-
-.card-link {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 20px 20px 20px 0;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
-
-.card:hover .card-link {
-  color: var(--accent);
 }
 
 .site-footer {
