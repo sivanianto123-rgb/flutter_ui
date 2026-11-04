@@ -7,12 +7,8 @@
 
   const galleryEl = document.getElementById("gallery");
 
-  const GRADIENTS = [
-    ["#1d2b64", "#0a0e23"],
-    ["#360033", "#0b0014"],
-    ["#0f2027", "#06090a"],
-    ["#283048", "#0b0f1a"],
-  ];
+  // soft backdrop tints behind each phone, picked per project so the grid has some rhythm
+  const GLOWS = ["#2997ff", "#a259ff", "#ff7a59", "#2fd6a3", "#ffc53d", "#ff5c8a"];
 
   function setStatus(message, isError = false) {
     galleryEl.innerHTML = `<p class="status${isError ? " error" : ""}">${escapeHtml(message)}</p>`;
@@ -94,7 +90,6 @@
       );
 
       const isReact = root === "to_do_list";
-      const gradient = GRADIENTS[hashString(root) % GRADIENTS.length];
 
       entries.push({
         title: titleCase(lastSegment),
@@ -104,31 +99,13 @@
         imageUrl: screenshotPath
           ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${encodeGithubPath(screenshotPath)}`
           : null,
-        gradientA: gradient[0],
-        gradientB: gradient[1],
+        glow: GLOWS[hashString(root) % GLOWS.length],
       });
     }
 
     entries.sort((a, b) => a.title.localeCompare(b.title));
-    return entries;
-  }
-
-  // A little wireframe "app screen" silhouette — status bar, hero block,
-  // text lines, a button — so entries without a real screenshot yet still
-  // read as a UI preview instead of a blank color tile.
-  function wireframeSvg() {
-    return `
-      <svg class="wireframe" viewBox="0 0 160 280" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <rect x="10" y="10" width="140" height="260" rx="18" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="2" />
-        <rect x="26" y="28" width="30" height="6" rx="3" fill="currentColor" fill-opacity="0.35" />
-        <circle cx="122" cy="31" r="4" fill="currentColor" fill-opacity="0.35" />
-        <rect x="26" y="50" width="108" height="70" rx="10" fill="currentColor" fill-opacity="0.16" />
-        <rect x="26" y="134" width="90" height="8" rx="4" fill="currentColor" fill-opacity="0.3" />
-        <rect x="26" y="150" width="70" height="8" rx="4" fill="currentColor" fill-opacity="0.2" />
-        <rect x="26" y="176" width="108" height="30" rx="15" fill="currentColor" fill-opacity="0.28" />
-        <rect x="26" y="222" width="50" height="7" rx="3.5" fill="currentColor" fill-opacity="0.18" />
-        <rect x="26" y="238" width="80" height="7" rx="3.5" fill="currentColor" fill-opacity="0.18" />
-      </svg>`;
+    // only show projects that have a real UI screenshot to look at
+    return entries.filter((entry) => entry.imageUrl);
   }
 
   function renderCards(entries) {
@@ -145,12 +122,8 @@
 
     galleryEl.innerHTML = entries
       .map((entry) => {
-        const media = entry.imageUrl
-          ? `<div class="card-image-wrap">
-               <img src="${entry.imageUrl}" alt="${escapeHtml(entry.title)}" loading="lazy" />
-             </div>`
-          : `<div class="card-fallback" style="--fallback-a:${entry.gradientA}; --fallback-b:${entry.gradientB}">
-               ${wireframeSvg()}
+        const media = `<div class="card-image-wrap" style="--glow:${entry.glow}">
+               <img src="${entry.imageUrl}" alt="${escapeHtml(entry.title)} screen" loading="lazy" />
              </div>`;
 
         return `

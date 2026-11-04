@@ -29,26 +29,9 @@
   </main>
 
   <footer class="site-footer">
-    <p>Auto-generated from this repo's project folders — add a new folder with a <code>pubspec.yaml</code> and push to add a card.</p>
+    <p>Auto-generated from this repo's project folders — add a new folder with a <code>pubspec.yaml</code> and a screenshot (<code>.png</code> / <code>.jpg</code>) at its top level, then push to add a card.</p>
   </footer>
 
-  <script>
-    // "Back to portfolio" returns to whichever portfolio sent the visitor here
-    // (the gallery is linked from more than one site). PORTFOLIO_URL is only the
-    // fallback for visitors who arrive directly.
-    (() => {
-      const PORTFOLIO_URL = "https://workspace-portfolio-ten.vercel.app/";
-      const link = document.getElementById("back-link");
-      link.href = PORTFOLIO_URL;
-      let from = null;
-      try { from = document.referrer ? new URL(document.referrer) : null; } catch (e) {}
-      const isThisGallery = from && from.host === location.host && from.pathname.startsWith("/flutter_ui");
-      if (from && !isThisGallery && /^https?:$/.test(from.protocol)) {
-        // same-site referrers keep their path; cross-site ones only expose the origin
-        link.href = from.host === location.host ? from.href : from.origin + "/";
-      }
-    })();
-  </script>
   <script src="app.js"></script>
 </body>
 </html>
